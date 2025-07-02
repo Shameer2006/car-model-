@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Forest Predictor</title>
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lottie Player CDN -->
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    <style>
+        /* Animated gradient background */
+        body {
+            background: linear-gradient(270deg, #a1c4fd, #c2e9fb, #fbc2eb, #a6c1ee, #fbc2eb, #a1c4fd);
+            background-size: 1200% 1200%;
+            animation: gradientBG 18s ease infinite;
+        }
+        @keyframes gradientBG {
+            0% {background-position:0% 50%}
+            50% {background-position:100% 50%}
+            100% {background-position:0% 50%}
+        }
+        /* Floating animation for 3D objects */
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        /* Slow rotate for accent 3D object */
+        .animate-rotate {
+            animation: rotate 10s linear infinite;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Card glow on hover */
+        .card-glow:hover {
+            box-shadow: 0 0 32px 8px #a78bfa55, 0 4px 32px 0 #6366f155;
+            transition: box-shadow 0.3s;
+        }
+        /* Button pulse */
+        .btn-pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 #6366f1aa; }
+            70% { box-shadow: 0 0 0 10px #6366f100; }
+            100% { box-shadow: 0 0 0 0 #6366f100; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+    <!-- Top floating 3D Lottie Animation -->
+    <div class="absolute top-8 left-8 animate-float z-10">
+        <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_3vbOcw.json" background="transparent" speed="1" style="width: 100px; height: 100px;" loop autoplay></lottie-player>
+    </div>
+    <!-- Rotating accent 3D Lottie Animation -->
+    <div class="absolute bottom-8 right-8 animate-rotate z-10">
+        <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_2LdLki.json" background="transparent" speed="1" style="width: 80px; height: 80px;" loop autoplay></lottie-player>
+    </div>
+    <!-- Decorative floating SVG shapes -->
+    <svg class="absolute top-1/4 left-1/2 animate-float opacity-30 z-0" width="120" height="120" viewBox="0 0 120 120" fill="none">
+        <circle cx="60" cy="60" r="50" fill="#a78bfa"/>
+    </svg>
+    <svg class="absolute bottom-1/3 right-1/3 animate-float opacity-20 z-0" width="80" height="80" viewBox="0 0 80 80" fill="none">
+        <rect x="10" y="10" width="60" height="60" rx="15" fill="#38bdf8"/>
+    </svg>
+    <!-- Main Card -->
+    <div class="bg-white bg-opacity-90 rounded-3xl shadow-2xl p-10 w-full max-w-md card-glow z-20 transition-all duration-300">
+        <div class="flex flex-col items-center mb-6">
+            <!-- Centered 3D Lottie Animation -->
+            <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_5ngs2ksb.json" background="transparent" speed="1" style="width: 120px; height: 120px;" loop autoplay></lottie-player>
+            <h2 class="text-3xl font-extrabold mt-4 mb-2 text-center text-purple-700 animate-fade-in">Enter Input Values</h2>
+        </div>
+        <form action="/predict" method="post" class="space-y-5 animate-fade-in-up">
+            <input type="text" name="feature1" placeholder="Feature 1" required class="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 transition">
+            <input type="text" name="feature2" placeholder="Feature 2" required class="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 transition">
+            <input type="text" name="feature3" placeholder="Feature 3" required class="w-full px-4 py-3 border-2 border-purple-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400 transition">
+            <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-bold rounded-xl shadow-md hover:scale-105 transform transition duration-300 btn-pulse">Predict</button>
+        </form>
+        {% if prediction_text %}
+            <div class="mt-8 text-center animate-fade-in-up">
+                <h3 class="text-2xl font-semibold text-green-600 drop-shadow-lg">{{ prediction_text }}</h3>
+            </div>
+        {% endif %}
+    </div>
+    <!-- Tailwind custom fade-in animations -->
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</body>
+</html>
